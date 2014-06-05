@@ -17,8 +17,9 @@ function random($dayseed, $indexseed)
     return $n;
 }
 
+$yi = "yi";
 
-$iday = date(Y) * 10000 + (date(n) + 1) * 100 + date(w);
+$iday = date(Y) * 10000 + (date(n) + 1) * 100 + date(j);
 $week = array("日","一","二","三","四","五","六");
 $directions = array("北方","东北方","东方","东南方","南方","西南方","西方","西北方");
 $activities = array(
@@ -151,7 +152,6 @@ function pickTodaysLuck() {
 	for ($i = 1; $i < $numGood + 1; $i++) {
 		addToGood($eventArr[$i]);
 	}
-
 	for ($i = 1; $i < $numBad + 1; $i++) {
 		addToBad($eventArr[$numGood + $i]);
 	}
@@ -207,7 +207,7 @@ function pickSpecials() {
 // 从 activities 中随机挑选 size 个
 function pickRandomActivity($activities, $size) {
 	$picked_events = pickRandom($activities, $size);
-	for ($i = 0; $i < count($picked_events); $i++) {
+	for ($i = 1; $i < count($picked_events); $i++) {
 		$picked_events[$i] = parse($picked_events[$i]);
 	}
 	return $picked_events;
@@ -217,10 +217,10 @@ function pickRandomActivity($activities, $size) {
 function pickRandom($array, $size) {
     global $iday;
 	$result = array();
-	for ($i = 1; $i < count($array) +1; $i++) {
+	for ($i = 1; $i < count($array); $i++) {
 		array_push($result,$array[$i]);
 	}
-	for ($j = 1; $j < count($array) - $size + 1; $j++) {
+	for ($j = 1; $j < count($array) - $size; $j++) {
 		$index = random($iday, $j) % count($result);
 		array_splice($result,0, 1,$index);
 	}
@@ -232,30 +232,30 @@ function parse($event) {
     global $varNames, $tools,$iday;
 	$result = array("name" => $event["name"], "good" => $event["good"], "bad" => $event["bad"]);  // clone
 
-	if (strpos($result["name"],"%v") != -1) {
-        str_replace('%v', $varNames[random($iday, 12) % count($varNames)],$result["name"]);
+	if (strpos($result["name"],"%v")) {
+        $result["name"] = str_replace('%v', $varNames[random($iday, 12) % count($varNames)],$result["name"]);
 	}
 
-	if (strpos($result["name"],"%t") != -1) {
-        str_replace('%t', $tools[random($iday, 11) % count($tools)],$result["name"]);
+	if (strripos($result["name"],"%t")) {
+        $result["name"] = str_replace('%t', $tools[random($iday, 11) % count($tools)],$result["name"]);
 	}
 
-	if (strpos($result["name"],"%l") != -1) {
-        str_replace('%l', (random($iday, 12) % 247 + 30),$result["name"]);
+	if (strpos($result["name"],"%l")) {
+        $result["name"] = str_replace('%l', (random($iday, 12) % 247 + 30),$result["name"]);
 	}
 
 	return $result;
 }
 
-// 添加到“宜”
+
 function addToGood($event) {
-     echo '<li><div class="name">'.$event["name"].'</div><div class="description">'.$event["good"].'</div></li>';
+    echo '<li><div class="name">'.$event["name"].'</div><div class="description">'.$event["good"].'</div></li>';
 
 }
 
-// 添加到“不宜”
+
 function addToBad($event) {
-    echo '<li><div class="name">'.$event["name"].'</div><div class="description">'.$event["bad"].'</div></li>';
+   echo '<li><div class="name">'.$event["name"].'</div><div class="description">'.$event["bad"].'</div></li>';
 }
 
 function direction(){

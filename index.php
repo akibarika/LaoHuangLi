@@ -29,7 +29,7 @@
 					</table>
 				</div>
 				<div class="content">
-					<ul class="yi"><?php pickTodaysLuck(); ?></ul>
+					<ul><?php pickTodaysLuck(); ?></ul>
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -41,7 +41,7 @@
 					</table>
 				</div>
 				<div class="content">
-                    <ul class="buyi"><?php pickTodaysLuck(); ?></ul>
+                    <ul><?php pickTodaysLuck(); ?></ul>
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -67,6 +67,5 @@
 				</ul>
 			</div>
 		</div>
-
 	</body>
 </html>
