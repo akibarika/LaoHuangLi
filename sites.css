@@ -95,6 +95,10 @@ body {
 	font-size:15pt;
 }
 
+.good .content li.buyi, .bad .content li.yi{
+    display: none;
+}
+
 .good {
 	background: #ffffaa;
 }
